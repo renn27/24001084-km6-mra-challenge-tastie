@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
             listMode = listMode,
             listener = object : OnItemClickedListener<Menu> {
                 override fun onItemClicked(item: Menu) {
-//                   navigateToDetail(item)
+                   navigateToDetail(item)
                 }
             }
         )
@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
         catalogAdapter?.submitData(data)
     }
 
-//    private fun navigateToDetail(item: Menu) {
-//        DetailMenuActivity.startActivity(requireContext(), item)
-//    }
+    private fun navigateToDetail(item: Menu) {
+        DetailMenuActivity.startActivity(requireContext(), item)
+    }
 }
