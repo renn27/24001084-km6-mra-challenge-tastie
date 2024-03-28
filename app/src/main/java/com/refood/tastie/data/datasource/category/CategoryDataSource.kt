@@ -1,4 +1,7 @@
 package com.refood.tastie.data.datasource.category
 
-class CategoryDataSource {
+import com.refood.tastie.data.model.Category
+
+interface CategoryDataSource {
+    fun getCategories(): List<Category>
 }
