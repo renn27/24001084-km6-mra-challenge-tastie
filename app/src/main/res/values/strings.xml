@@ -5,4 +5,35 @@
     <string name="title_tab_home">Home</string>
     <string name="title_tab_cart">Cart</string>
     <string name="title_tab_profile">Profile</string>
+    <string name="desc_bg_category_title">Shape background for category title</string>
+    <string name="text_category_title">Category</string>
+    <string name="text_catalog_title">Popular</string>
+    <string name="desc_bg_catalog_title">Shape background for catalog title</string>
+    <string name="text_title_banner">Diskon 50%</string>
+    <string name="text_desc_banner">Pesan makanan sekarang dan dapatkan diskon spesial 50%</string>
+    <string name="text_name">Hai Rendi,</string>
+    <string name="text_greetings">Mau makan apa hari ini?</string>
+    <string name="desc_catalog_image">This is catalog image</string>
+    <string name="desc_icon_list">this is icon list</string>
+    <string name="desc_category_image">this is category image</string>
+    <string name="desc_bg_name_header">shape background for name in header</string>
+    <string name="desc_icon_cart">icon cart</string>
+    <string name="desc_icon_profile">icon profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu_home">Home</string>
+    <string name="menu_cart">Keranjang</string>
+    <string name="menu_history">Riwayat</string>
+    <string name="menu_profile">Profil</string>
+    <string name="add_to_cart">Tambah ke Keranjang - %1$s </string>
+    <string name="desc_iv_catalog_image">iv_catalog_image</string>
+    <string name="desc_ib_add_item_count">Button add item count</string>
+    <string name="desc_ib_sub_item_count">Button sub item count</string>
+    <string name="desc_iv_location">iv location</string>
+    <string name="text_tv_location">Lokasi</string>
+    <string name="text_tv_detail_location">Jl.Coba-coba jalan aja Km.100 Kabupaten Ogan Ilir, Ujung dunia 12451</string>
+    <string name="text_tv_count">1</string>
+    <string name="text_cart_fragment">CART FRAGMENT</string>
+    <string name="history_fragment">HISTORY FRAGMENT</string>
+    <string name="text_profile_fragment">PROFILE FRAGMENT</string>
+    <string name="btn_back">Button Back navigation</string>
 </resources>
