@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.refood.tastie.base.ViewHolderBinder
+import com.refood.tastie.core.ViewHolderBinder
 import com.refood.tastie.data.model.Menu
 import com.refood.tastie.databinding.ItemMenuBinding
 import com.refood.tastie.databinding.ItemMenuListBinding

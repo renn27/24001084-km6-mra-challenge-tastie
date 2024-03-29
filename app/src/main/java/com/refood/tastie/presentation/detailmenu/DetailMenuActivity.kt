@@ -6,105 +6,120 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import coil.load
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.refood.tastie.R
+import com.refood.tastie.data.datasource.cart.CartDataSource
+import com.refood.tastie.data.datasource.cart.CartDatabaseDataSource
 import com.refood.tastie.data.model.Menu
+import com.refood.tastie.data.repository.CartRepository
+import com.refood.tastie.data.repository.CartRepositoryImpl
+import com.refood.tastie.data.source.local.database.AppDatabase
 import com.refood.tastie.databinding.ActivityDetailMenuBinding
+import com.refood.tastie.utils.GenericViewModelFactory
+import com.refood.tastie.utils.proceedWhen
 import com.refood.tastie.utils.toIndonesianFormat
 
 class DetailMenuActivity : AppCompatActivity() {
-
-    private var itemQuantity: Int = 1
-    private var itemPrice: Double = 0.0
-    private var urlLocation: String = "https://maps.app.goo.gl/mQHCn8ZiDZGpjk3AA"
-
-    companion object {
-        const val EXTRAS_DETAIL_DATA = "EXTRA_DETAIL_DATA"
-        fun startActivity(context: Context, catalog: Menu) {
-            val intent = Intent(context, DetailMenuActivity::class.java)
-            intent.putExtra(EXTRAS_DETAIL_DATA, catalog)
-            context.startActivity(intent)
-        }
-    }
-
     private val binding: ActivityDetailMenuBinding by lazy {
         ActivityDetailMenuBinding.inflate(layoutInflater)
+    }
+    private val viewModel: DetailMenuViewModel by viewModels {
+        val db = AppDatabase.getInstance(this)
+        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
+        val rp: CartRepository = CartRepositoryImpl(ds)
+        GenericViewModelFactory.create(
+            DetailMenuViewModel(intent?.extras, rp)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        getIntentData()
-        setClickAction()
+        bindProduct(viewModel.product)
+        setClickListener()
+        observeData()
     }
 
-    private fun getIntentData() {
-        intent.extras?.getParcelable<Menu>(EXTRAS_DETAIL_DATA)?.let {
-            setData(it)
-        }
-    }
-
-    private fun setData(it: Menu) {
-        binding.ivCatalogImage.load(it.imagePictUrl) {
-            crossfade(true)
-            error(R.drawable.img_ayam_bakar)
-        }
-        binding.tvCatalogName.text = it.name
-        binding.tvCatalogPrice.text = it.price.toIndonesianFormat()
-        binding.tvDesc.text = it.description
-        binding.tvLocation.text = it.location
-        itemPrice = it.price
-        urlLocation = it.urlLocation
-        bindCountPrice()
-    }
-
-    private fun setClickAction() {
-        binding.tvLocation.setOnClickListener {
-            openMap()
-        }
-        binding.ibSubItemCount.setOnClickListener {
-            subItemCount()
-        }
-        binding.ibAddItemCount.setOnClickListener {
-            addItemCount()
-        }
+    private fun setClickListener() {
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressed()
+        }
+        binding.ivSubItemCount.setOnClickListener {
+            viewModel.minus()
+        }
+        binding.ivAddItemCount.setOnClickListener {
+            viewModel.add()
+        }
+        binding.btnAddToCart.setOnClickListener {
+            addProductToCart()
+        }
+        binding.tvLocation.setOnClickListener {
+            openMaps()
         }
     }
 
-    private fun addItemCount() {
-        itemQuantity += 1
-        bindCountPrice()
-    }
-
-    private fun subItemCount() {
-        if (itemQuantity > 1) {
-            itemQuantity -= 1
-            bindCountPrice()
-        } else {
-            Toast.makeText(this, "Minimal Pembelian Adalah 1", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun bindCountPrice() {
-        binding.btnAddToCart.text = getString(R.string.add_to_cart, getTotalPrice(itemQuantity, itemPrice))
-        binding.tvAddCountCart.text = itemQuantity.toString()
-    }
-
-    private fun openMap() {
-        val gmmIntentUri = Uri.parse(urlLocation)
+    private fun openMaps() {
+        val gmmIntentUri = Uri.parse(viewModel.urlLocation)
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         try {
             startActivity(mapIntent)
         } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(this, "No maps found, please install maps apps", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No maps found, please install maps apps", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
-    private fun getTotalPrice(quantity: Int, itemPrice: Double): String? {
-        val totalPrice = quantity * itemPrice
-        return totalPrice.toIndonesianFormat()
+    private fun addProductToCart() {
+        viewModel.addToCart().observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.text_add_to_cart_success), Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                },
+                doOnError = {
+                    Toast.makeText(this, getString(R.string.add_to_cart_failed), Toast.LENGTH_SHORT)
+                        .show()
+                },
+                doOnLoading = {
+                    Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+    }
+
+    private fun bindProduct(menu: Menu?) {
+        menu?.let { item ->
+            binding.ivCatalogImage.load(item.imagePictUrl) {
+                crossfade(true)
+            }
+            binding.tvCatalogName.text = item.name
+            binding.tvCatalogPrice.text = item.price.toIndonesianFormat()
+            binding.tvDesc.text = item.description
+            binding.tvLocation.text = item.location
+        }
+    }
+
+    private fun observeData() {
+        viewModel.priceLiveData.observe(this) {
+            binding.btnAddToCart.isEnabled = it != 0.0
+            binding.btnAddToCart.text = it.toIndonesianFormat()
+        }
+        viewModel.productCountLiveData.observe(this) {
+            binding.tvAddCountCart.text = it.toString()
+        }
+    }
+
+    companion object {
+        const val EXTRA_MENU = "EXTRA_MENU"
+        fun startActivity(context: Context, menu: Menu) {
+            val intent = Intent(context, DetailMenuActivity::class.java)
+            intent.putExtra(EXTRA_MENU, menu)
+            context.startActivity(intent)
+        }
     }
 }

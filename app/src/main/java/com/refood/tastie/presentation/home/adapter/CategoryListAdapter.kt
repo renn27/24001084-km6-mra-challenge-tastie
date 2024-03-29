@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.refood.tastie.data.model.Category
 import com.refood.tastie.databinding.ItemCategoryMenuBinding
-import com.refood.tastie.base.ViewHolderBinder
+import com.refood.tastie.core.ViewHolderBinder
 
 class CategoryListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
