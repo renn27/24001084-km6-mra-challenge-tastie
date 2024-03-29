@@ -16,16 +16,18 @@ import com.refood.tastie.data.repository.CategoryRepository
 import com.refood.tastie.data.repository.CategoryRepositoryImpl
 import com.refood.tastie.data.repository.MenuRepository
 import com.refood.tastie.data.repository.MenuRepositoryImpl
+import com.refood.tastie.data.source.local.pref.UserPreference
+import com.refood.tastie.data.source.local.pref.UserPreferenceImpl
 import com.refood.tastie.databinding.FragmentHomeBinding
 import com.refood.tastie.presentation.detailmenu.DetailMenuActivity
 import com.refood.tastie.presentation.home.adapter.CategoryListAdapter
 import com.refood.tastie.utils.GenericViewModelFactory
-import com.refood.tastie.utils.GridSpacingItemDecoration
 import com.rendi.foodorderapp.presentation.home.adapter.MenuListAdapter
 import com.rendi.foodorderapp.presentation.home.adapter.OnItemClickedListener
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+
 
     private val viewModel: HomeViewModel by viewModels {
         val menuDataSource = DummyMenuDataSource()
@@ -35,18 +37,10 @@ class HomeFragment : Fragment() {
         GenericViewModelFactory.create(HomeViewModel(categoryRepository, menuRepository))
     }
 
-//    private val categoryAdapter: CategoryListAdapter by lazy {
-//        CategoryListAdapter {
-//        }
-//    }
-//
-//    private val productAdapter: MenuListAdapter by lazy {
-//        MenuListAdapter {
-//        }
-//    }
-
     private var categoryAdapter: CategoryListAdapter? = null
     private var catalogAdapter: MenuListAdapter? = null
+
+    private lateinit var userPreference: UserPreference
     private var isUsingListMode: Boolean = false
 
     override fun onCreateView(
@@ -60,9 +54,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUserPreference()
         bindCategoryList(viewModel.getCategories())
         bindCatalogList(isUsingListMode, viewModel.getMenus())
         setClickAction()
+    }
+
+    private fun setUserPreference() {
+        userPreference = UserPreferenceImpl(requireContext())
+        isUsingListMode = userPreference.getListMode()
+        setIcon(isUsingListMode)
     }
 
     private fun bindCategoryList(data: List<Category>) {
@@ -74,15 +75,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setClickAction() {
-        binding.ivChangeListMode.setOnClickListener {
+        binding.ibChangeListMode.setOnClickListener {
             isUsingListMode = !isUsingListMode
             setIcon(isUsingListMode)
             bindCatalogList(isUsingListMode, viewModel.getMenus())
+            userPreference.setListMode(isUsingListMode)
         }
     }
 
     private fun setIcon(usingListMode: Boolean) {
-        binding.ivChangeListMode.setImageResource(if (usingListMode) R.drawable.ic_list else R.drawable.ic_grid)
+        binding.ibChangeListMode.setImageResource(if (usingListMode) R.drawable.ic_list else R.drawable.ic_grid)
     }
 
     private fun bindCatalogList(isUsingListMode: Boolean, data: List<Menu>) {
@@ -91,7 +93,7 @@ class HomeFragment : Fragment() {
             listMode = listMode,
             listener = object : OnItemClickedListener<Menu> {
                 override fun onItemClicked(item: Menu) {
-                   navigateToDetail(item)
+                    navigateToDetail(item)
                 }
             }
         )

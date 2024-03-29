@@ -2,7 +2,7 @@ package com.rendi.foodorderapp.presentation.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
-import com.refood.tastie.base.ViewHolderBinder
+import com.refood.tastie.core.ViewHolderBinder
 import com.refood.tastie.data.model.Menu
 import com.refood.tastie.databinding.ItemMenuListBinding
 import com.refood.tastie.utils.toIndonesianFormat

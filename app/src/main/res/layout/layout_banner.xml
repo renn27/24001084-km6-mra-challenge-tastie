@@ -41,16 +41,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="24dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/black"
-                android:layout_marginTop="24dp"
                 android:text="@string/text_title_banner"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_icon_banner"
-                app:layout_constraintTop_toTopOf="@id/iv_icon_banner"/>
+                app:layout_constraintTop_toTopOf="@id/iv_icon_banner" />
 
             <TextView
                 android:id="@+id/tv_desc_banner"
@@ -60,12 +60,12 @@
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/black"
                 android:text="@string/text_desc_banner"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_icon_banner"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_banner"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_title_banner" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
