@@ -11,7 +11,7 @@ class ProfileViewModel : ViewModel() {
             username = "rendialamsyah12",
             email = "rendirendi@gmail.com",
             noTelp = "08987675272",
-            profileImg = "https://avatars.githubusercontent.com/u/21256595?v=4"
+            profileImg = "https://o-cdn-cas.sirclocdn.com/parenting/images/Spongebob.width-800.format-webp.webp"
         )
     )
 
