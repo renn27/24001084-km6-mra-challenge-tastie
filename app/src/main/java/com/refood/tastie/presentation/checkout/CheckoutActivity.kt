@@ -1,10 +1,12 @@
 package com.refood.tastie.presentation.checkout
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.refood.tastie.R
 import com.refood.tastie.data.datasource.cart.CartDataSource
 import com.refood.tastie.data.datasource.cart.CartDatabaseDataSource
@@ -13,10 +15,16 @@ import com.refood.tastie.data.repository.CartRepositoryImpl
 import com.refood.tastie.data.source.local.database.AppDatabase
 import com.refood.tastie.databinding.ActivityCheckoutBinding
 import com.refood.tastie.presentation.checkout.adapter.PriceListAdapter
+import com.refood.tastie.presentation.common.CustomDialog
 import com.refood.tastie.presentation.common.adapter.CartListAdapter
+import com.refood.tastie.presentation.main.MainActivity
 import com.refood.tastie.utils.GenericViewModelFactory
+import com.refood.tastie.utils.ResultWrapper
 import com.refood.tastie.utils.proceedWhen
 import com.refood.tastie.utils.toIndonesianFormat
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -52,6 +60,18 @@ class CheckoutActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
+        binding.btnCheckout.setOnClickListener {
+            viewModel.deleteAllCart()
+            showCustomDialog()
+        }
+    }
+    private fun showCustomDialog() {
+        val dialog = CustomDialog(this, object : CustomDialog.DialogListener {
+            override fun onBackToHomeClicked() {
+                finish()
+            }
+        })
+        dialog.show()
     }
 
     private fun setupList() {
