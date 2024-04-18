@@ -17,6 +17,7 @@ import com.refood.tastie.data.repository.CartRepository
 import com.refood.tastie.data.repository.CartRepositoryImpl
 import com.refood.tastie.data.source.local.database.AppDatabase
 import com.refood.tastie.databinding.ActivityDetailMenuBinding
+import com.refood.tastie.presentation.main.MainActivity
 import com.refood.tastie.utils.GenericViewModelFactory
 import com.refood.tastie.utils.proceedWhen
 import com.refood.tastie.utils.toIndonesianFormat
@@ -79,6 +80,9 @@ class DetailMenuActivity : AppCompatActivity() {
                         this,
                         getString(R.string.text_add_to_cart_success), Toast.LENGTH_SHORT
                     ).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("navigate_to_cart", true)
+                    startActivity(intent)
                     finish()
                 },
                 doOnError = {

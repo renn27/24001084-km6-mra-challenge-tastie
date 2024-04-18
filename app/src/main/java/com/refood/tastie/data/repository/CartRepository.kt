@@ -49,7 +49,7 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
                 ResultWrapper.Empty(it.payload)
             }.onStart {
                 emit(ResultWrapper.Loading())
-                delay(2000)
+                delay(1000)
             }
     }
 
@@ -70,7 +70,7 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
                 ResultWrapper.Empty(it.payload)
             }.onStart {
                 emit(ResultWrapper.Loading())
-                delay(2000)
+                delay(1000)
             }
     }
 
@@ -92,7 +92,7 @@ class CartRepositoryImpl(private val cartDataSource: CartDataSource) : CartRepos
                         itemNotes = notes
                     )
                 )
-                delay(2000)
+                delay(1000)
                 affectedRow > 0
             }
         } ?: flow {

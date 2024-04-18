@@ -10,49 +10,57 @@ import com.refood.tastie.data.model.Category
 import com.refood.tastie.databinding.ItemCategoryMenuBinding
 import com.refood.tastie.core.ViewHolderBinder
 
-class CategoryListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CategoryListAdapter(private val itemClick: (Category) -> Unit) :
+    RecyclerView.Adapter<CategoryListAdapter.ItemCategoryViewHolder>() {
 
-    private var asyncDataDiffer = AsyncListDiffer(
-        this, object : DiffUtil.ItemCallback<Category>() {
-            override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-                return oldItem.name == newItem.name
-            }
+    private val dataDiffer =
+        AsyncListDiffer(
+            this,
+            object : DiffUtil.ItemCallback<Category>() {
+                override fun areItemsTheSame(
+                    oldItem: Category,
+                    newItem: Category
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
+                override fun areContentsTheSame(
+                    oldItem: Category,
+                    newItem: Category
+                ): Boolean {
+                    return oldItem.hashCode() == newItem.hashCode()
+                }
             }
-        }
-    )
+        )
 
     fun submitData(data: List<Category>) {
-        asyncDataDiffer.submitList(data)
+        dataDiffer.submitList(data)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CategoryViewHolder(
-            ItemCategoryMenuBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCategoryViewHolder {
+        val binding =
+            ItemCategoryMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ItemCategoryViewHolder(binding, itemClick)
     }
 
-    override fun getItemCount(): Int = asyncDataDiffer.currentList.size
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder !is ViewHolderBinder<*>) return
-        (holder as ViewHolderBinder<Category>).bind(asyncDataDiffer.currentList[position])
+    override fun onBindViewHolder(holder: ItemCategoryViewHolder, position: Int) {
+        holder.bindView(dataDiffer.currentList[position])
     }
 
-    class CategoryViewHolder(private val binding: ItemCategoryMenuBinding) :
-        RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
-        override fun bind(item: Category) {
-            item.let {
-                binding.tvCategoryName.text = it.name
-                binding.ivCategoryImage.load(it.imageUrl) {
+    override fun getItemCount(): Int = dataDiffer.currentList.size
+
+    class ItemCategoryViewHolder(
+        private val binding: ItemCategoryMenuBinding,
+        val itemClick: (Category) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bindView(item: Category) {
+            with(item) {
+                binding.ivCategoryImage.load(item.imageUrl) {
                     crossfade(true)
                 }
+                binding.tvCategoryName.text = item.name
+                itemView.setOnClickListener { itemClick(this) }
             }
         }
     }
