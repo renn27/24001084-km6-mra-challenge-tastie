@@ -38,7 +38,7 @@
     <string name="btn_back">Button Back navigation</string>
     <string name="text_add_to_cart_success">Berhasil ditambahkan ke keranjang</string>
     <string name="add_to_cart_failed">Gagal menambahkan ke keranjang</string>
-    <string name="loading">loading..</string>
+    <string name="loading">loading...</string>
     <string name="total_quantity">x%s</string>
     <string name="text_title_your_cart">Keranjang</string>
     <string name="text_total_price">Total Harga</string>
@@ -72,4 +72,5 @@
     <string name="text_payment">Payment</string>
     <string name="text_deliveryp">Delivery</string>
     <string name="text_order_method">Order Method</string>
+    <string name="error_checkout">Error Checkout</string>
 </resources>
