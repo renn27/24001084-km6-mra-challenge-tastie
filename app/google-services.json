@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "72894673947",
+    "project_id": "tastie-4fa8a",
+    "storage_bucket": "tastie-4fa8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72894673947:android:e839ab15a61f3894d534be",
+        "android_client_info": {
+          "package_name": "com.refood.tastie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuXbfg4NkOdTH_PfgpQCbJeEGyanKAvs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,11 +7,15 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.refood.tastie.data.model.Cart
 import com.refood.tastie.data.repository.CartRepository
+import com.refood.tastie.data.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
+class CartViewModel(
+    private val cartRepository: CartRepository,
+    private val userRepository: UserRepository
+) : ViewModel() {
     fun getAllCarts() = cartRepository.getUserCartData().asLiveData(Dispatchers.IO)
     fun decreaseCart(item: Cart) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -38,4 +42,5 @@ class CartViewModel(private val cartRepository: CartRepository) : ViewModel() {
             }
         }
     }
+    fun isUserLoggedIn() = userRepository.isLoggedIn()
 }

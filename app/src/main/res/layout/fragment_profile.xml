@@ -32,105 +32,87 @@
         app:layout_constraintTop_toTopOf="@+id/tv_profile_fragment_title"
         app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/iv_profile"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginVertical="24dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_ayam_bakar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_profile_fragment_title" />
-
-    <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
-        android:text="@string/text_username"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_profile" />
+        app:layout_constraintTop_toTopOf="@id/tv_profile_fragment_title"
+        app:layout_constraintVertical_bias="0.1">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/container_username"
+        <ImageView
+            android:id="@+id/iv_profile_pict"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@tools:sample/avatars" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_edit_photo"
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_pen" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/layout_form"
+        layout="@layout/layout_user_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username">
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_profile"
+        app:layout_constraintVertical_bias="0"
+        tools:layout_editor_absoluteX="16dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tf_username"
+    <FrameLayout
+        android:id="@+id/fl_btn_loading_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/layout_form">
+
+        <Button
+            android:id="@+id/btn_change_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/input_username" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/text_change_profile" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pb_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_email"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_change_pwd"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/text_input_email"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:padding="8dp"
+        android:text="@string/text_change_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_username" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/container_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tf_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/text_email" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@id/fl_btn_loading_state" />
 
     <TextView
-        android:id="@+id/tv_notelp"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_logout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/text_no_hp"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:text="@string/text_logout"
+        android:textColor="@color/red_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_email" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/container_notelp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_notelp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tf_notelp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/text_input_no_hp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@id/tv_change_pwd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
