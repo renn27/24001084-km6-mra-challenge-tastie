@@ -29,4 +29,8 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         <item name="android:fontFamily">@font/font_nunito</item>
     </style>
+    <style name="circleImageView" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

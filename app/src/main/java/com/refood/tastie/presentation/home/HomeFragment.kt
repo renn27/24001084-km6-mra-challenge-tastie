@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import coil.load
+import coil.transform.CircleCropTransformation
+import com.google.firebase.auth.FirebaseAuth
 import com.refood.tastie.R
 import com.refood.tastie.data.datasource.category.CategoryApiDataSource
 import com.refood.tastie.data.datasource.menu.MenuApiDataSource
@@ -16,8 +20,10 @@ import com.refood.tastie.data.repository.CategoryRepository
 import com.refood.tastie.data.repository.CategoryRepositoryImpl
 import com.refood.tastie.data.repository.MenuRepository
 import com.refood.tastie.data.repository.MenuRepositoryImpl
+import com.refood.tastie.data.repository.UserRepositoryImpl
 import com.refood.tastie.data.source.local.pref.UserPreference
 import com.refood.tastie.data.source.local.pref.UserPreferenceImpl
+import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.refood.tastie.data.source.network.services.TastieApiService
 import com.refood.tastie.databinding.FragmentHomeBinding
 import com.refood.tastie.presentation.detailmenu.DetailMenuActivity
@@ -34,11 +40,14 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels {
         val service = TastieApiService.invoke()
+        val firebaseAuth = FirebaseAuth.getInstance()
         val menuDataSource = MenuApiDataSource(service)
         val menuRepository: MenuRepository = MenuRepositoryImpl(menuDataSource)
         val categoryDataSource = CategoryApiDataSource(service)
         val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository, menuRepository))
+        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+        val userRepository = UserRepositoryImpl(userDataSource)
+        GenericViewModelFactory.create(HomeViewModel(categoryRepository, menuRepository,userRepository))
     }
 
     private lateinit var userPreference: UserPreference
@@ -70,8 +79,22 @@ class HomeFragment : Fragment() {
         getCategoryData()
         setupListMenu(isUsingListMode)
         getMenuData(currentCategory)
+        setupUserData()
         setClickAction()
     }
+
+    private fun setupUserData() {
+        viewModel.getCurrentUser()?.let {
+            binding.layoutHeader.tvName.setText(it.fullName)
+            binding.layoutHeader.ivUser.load(it.photoUrl) {
+                crossfade(true)
+                placeholder(R.drawable.iv_profile_placeholder)
+                error(R.drawable.iv_profile_placeholder)
+                transformations(CircleCropTransformation())
+            }
+        }
+    }
+
 
     private fun setUserPreference() {
         userPreference = UserPreferenceImpl(requireContext())

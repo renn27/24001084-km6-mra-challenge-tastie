@@ -9,7 +9,7 @@
         android:id="@+id/menu_tab_home"
         android:name="com.refood.tastie.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/menu_tab_cart"
         android:name="com.refood.tastie.presentation.cart.CartFragment"

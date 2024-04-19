@@ -5,20 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.firebase.auth.FirebaseAuth
 import com.refood.tastie.R
 import com.refood.tastie.data.datasource.cart.CartDataSource
 import com.refood.tastie.data.datasource.cart.CartDatabaseDataSource
 import com.refood.tastie.data.model.Cart
 import com.refood.tastie.data.repository.CartRepository
 import com.refood.tastie.data.repository.CartRepositoryImpl
+import com.refood.tastie.data.repository.UserRepository
+import com.refood.tastie.data.repository.UserRepositoryImpl
 import com.refood.tastie.data.source.local.database.AppDatabase
+import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSource
+import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.refood.tastie.databinding.FragmentCartBinding
 import com.refood.tastie.presentation.checkout.CheckoutActivity
 import com.refood.tastie.presentation.common.adapter.CartListAdapter
 import com.refood.tastie.presentation.common.adapter.CartListener
+import com.refood.tastie.presentation.login.LoginActivity
 import com.refood.tastie.utils.GenericViewModelFactory
 import com.refood.tastie.utils.hideKeyboard
 import com.refood.tastie.utils.proceedWhen
@@ -29,9 +36,12 @@ class CartFragment : Fragment() {
 
     private val viewModel: CartViewModel by viewModels {
         val db = AppDatabase.getInstance(requireContext())
+        val firebaseAuth = FirebaseAuth.getInstance()
         val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
         val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(CartViewModel(rp))
+        val uds : FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+        val urp : UserRepository = UserRepositoryImpl(uds)
+        GenericViewModelFactory.create(CartViewModel(rp,urp))
     }
 
     private val adapter: CartListAdapter by lazy {
@@ -74,8 +84,16 @@ class CartFragment : Fragment() {
 
     private fun setClickListeners() {
         binding.btnCheckout.setOnClickListener {
-            startActivity(Intent(requireContext(), CheckoutActivity::class.java))
+            if (viewModel.isUserLoggedIn()) {
+                startActivity(Intent(requireContext(), CheckoutActivity::class.java))
+            } else {
+                Toast.makeText(requireContext(),"Silahkan login terlebih dahulu", Toast.LENGTH_SHORT).show()
+                navigateToLogin()
+            }
         }
+    }
+    private fun navigateToLogin() {
+        startActivity(Intent(requireContext(), LoginActivity::class.java))
     }
 
     private fun observeData() {
