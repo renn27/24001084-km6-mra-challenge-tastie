@@ -17,20 +17,22 @@ import com.refood.tastie.presentation.login.LoginActivity
 import com.refood.tastie.utils.GenericViewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 //    private val isLogin = false
 
-    private val viewModel: MainViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): MainViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        return MainViewModel(repo)
-    }
+    private val viewModel: MainViewModel by viewModel()
+//    private val viewModel: MainViewModel by viewModels {
+//        GenericViewModelFactory.create(createViewModel())
+//    }
+//
+//    private fun createViewModel(): MainViewModel {
+//        val firebaseAuth = FirebaseAuth.getInstance()
+//        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+//        val repo = UserRepositoryImpl(dataSource)
+//        return MainViewModel(repo)
+//    }
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)

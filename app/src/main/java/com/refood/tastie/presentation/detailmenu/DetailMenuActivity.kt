@@ -6,33 +6,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.refood.tastie.R
-import com.refood.tastie.data.datasource.cart.CartDataSource
-import com.refood.tastie.data.datasource.cart.CartDatabaseDataSource
 import com.refood.tastie.data.model.Menu
-import com.refood.tastie.data.repository.CartRepository
-import com.refood.tastie.data.repository.CartRepositoryImpl
-import com.refood.tastie.data.source.local.database.AppDatabase
 import com.refood.tastie.databinding.ActivityDetailMenuBinding
 import com.refood.tastie.presentation.main.MainActivity
-import com.refood.tastie.utils.GenericViewModelFactory
 import com.refood.tastie.utils.proceedWhen
 import com.refood.tastie.utils.toIndonesianFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DetailMenuActivity : AppCompatActivity() {
     private val binding: ActivityDetailMenuBinding by lazy {
         ActivityDetailMenuBinding.inflate(layoutInflater)
     }
-    private val viewModel: DetailMenuViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        GenericViewModelFactory.create(
-            DetailMenuViewModel(intent?.extras, rp)
-        )
+
+    private val viewModel: DetailMenuViewModel by viewModel {
+        parametersOf(intent.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

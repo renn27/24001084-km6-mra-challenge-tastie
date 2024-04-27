@@ -1,42 +1,18 @@
 package com.refood.tastie.presentation.checkout
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
-import com.google.firebase.auth.FirebaseAuth
 import com.refood.tastie.R
-import com.refood.tastie.data.datasource.cart.CartDataSource
-import com.refood.tastie.data.datasource.cart.CartDatabaseDataSource
-import com.refood.tastie.data.datasource.menu.MenuApiDataSource
-import com.refood.tastie.data.datasource.menu.MenuDataSource
-import com.refood.tastie.data.repository.CartRepository
-import com.refood.tastie.data.repository.CartRepositoryImpl
-import com.refood.tastie.data.repository.MenuRepository
-import com.refood.tastie.data.repository.MenuRepositoryImpl
-import com.refood.tastie.data.repository.UserRepository
-import com.refood.tastie.data.repository.UserRepositoryImpl
-import com.refood.tastie.data.source.local.database.AppDatabase
-import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSource
-import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.refood.tastie.data.source.network.services.TastieApiService
 import com.refood.tastie.databinding.ActivityCheckoutBinding
 import com.refood.tastie.presentation.checkout.adapter.PriceListAdapter
 import com.refood.tastie.presentation.common.CustomDialog
 import com.refood.tastie.presentation.common.adapter.CartListAdapter
-import com.refood.tastie.presentation.login.LoginActivity
-import com.refood.tastie.presentation.main.MainActivity
-import com.refood.tastie.utils.GenericViewModelFactory
-import com.refood.tastie.utils.ResultWrapper
 import com.refood.tastie.utils.proceedWhen
 import com.refood.tastie.utils.toIndonesianFormat
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
@@ -44,18 +20,7 @@ class CheckoutActivity : AppCompatActivity() {
         ActivityCheckoutBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: CheckoutViewModel by viewModels {
-        val db = AppDatabase.getInstance(this)
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val s = TastieApiService.invoke()
-        val pds: MenuDataSource = MenuApiDataSource(s)
-        val pr: MenuRepository = MenuRepositoryImpl(pds)
-        val ds: CartDataSource = CartDatabaseDataSource(db.cartDao())
-        val rp: CartRepository = CartRepositoryImpl(ds)
-        val uds : FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val urp : UserRepository = UserRepositoryImpl(uds)
-        GenericViewModelFactory.create(CheckoutViewModel(rp, pr, urp))
-    }
+    private val viewModel: CheckoutViewModel by viewModel()
 
     private val adapter: CartListAdapter by lazy {
         CartListAdapter()
@@ -107,9 +72,11 @@ class CheckoutActivity : AppCompatActivity() {
                     binding.layoutState.pbLoading.isVisible = false
                     binding.layoutContent.root.isVisible = false
                     binding.layoutContent.rvCart.isVisible = false
-                    Toast.makeText(this,
+                    Toast.makeText(
+                        this,
                         getString(R.string.error_checkout),
-                        Toast.LENGTH_SHORT).show()
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
         }

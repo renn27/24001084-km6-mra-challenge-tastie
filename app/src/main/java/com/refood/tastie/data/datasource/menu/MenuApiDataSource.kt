@@ -8,8 +8,8 @@ import com.refood.tastie.data.source.network.services.TastieApiService
 class MenuApiDataSource(
     private val service: TastieApiService
 ) : MenuDataSource {
-    override suspend fun getMenus(category: String?) : MenuResponse {
-       return service.getMenus(category)
+    override suspend fun getMenus(category: String?): MenuResponse {
+        return service.getMenus(category)
     }
 
     override suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse {

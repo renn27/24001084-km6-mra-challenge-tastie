@@ -14,6 +14,7 @@ class HomeViewModel(
 ) : ViewModel() {
     fun getMenus(category: String? = null) =
         menuRepository.getMenus(category).asLiveData(Dispatchers.IO)
+
     fun getCategories() = categoryRepository.getCategories().asLiveData(Dispatchers.IO)
 
     fun getCurrentUser() = userRepository.getCurrentUser()
