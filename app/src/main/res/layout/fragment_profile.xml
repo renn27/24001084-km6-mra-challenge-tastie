@@ -30,7 +30,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_profile_fragment_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_profile_fragment_title"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="@string/desc_btn_edit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_profile"
@@ -47,7 +48,8 @@
             android:id="@+id/iv_profile_pict"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/desc_iv_profile_pict" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_edit_photo"

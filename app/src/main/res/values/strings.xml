@@ -38,7 +38,7 @@
     <string name="btn_back">Button Back navigation</string>
     <string name="text_add_to_cart_success">Berhasil ditambahkan ke keranjang</string>
     <string name="add_to_cart_failed">Gagal menambahkan ke keranjang</string>
-    <string name="loading">loading...</string>
+    <string name="loading">loading…</string>
     <string name="total_quantity">x%s</string>
     <string name="text_title_your_cart">Keranjang</string>
     <string name="text_total_price">Total Harga</string>
@@ -92,4 +92,17 @@
     <string name="text_change_profile">Change Profile</string>
     <string name="text_change_password">Change Password</string>
     <string name="text_logout">Logout</string>
+    <string name="desc_iv_sub_item_count">icon_min</string>
+    <string name="desc_iv_add_item_count">icon_add</string>
+    <string name="desc_iv_logo_app">app_logo</string>
+    <string name="desc_btn_edit">button_edit</string>
+    <string name="desc_iv_profile_pict">Profile_pict</string>
+    <string name="desc_iv_remove_cart">icon_remove_cart</string>
+    <string name="desc_iv_minus">icon_min</string>
+    <string name="desc_iv_plus">desc_iv_plus</string>
+    <string name="desc_bg_banneer">bg_banner</string>
+    <string name="desc_icon_banner">desc_icon_banner</string>
+    <string name="success_order">Your order has been successfully created.</string>
+    <string name="back">Back</string>
+    <string name="order_success">Order Success</string>
 </resources>

@@ -45,18 +45,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_banner" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_category_item"
+
+        <FrameLayout
+            android:id="@+id/fl_container_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="4dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:minHeight="100dp"
             app:layout_constraintTop_toBottomOf="@id/tv_category_title"
-            tools:listitem="@layout/item_category_menu" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <include
+                android:id="@+id/layout_state_category"
+                layout="@layout/layout_content_state"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_category_title"
+                app:layout_constraintBottom_toTopOf="@id/tv_catalog_title"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_category_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_category_title"
+                tools:listitem="@layout/item_category_menu" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_catalog_title"
@@ -72,7 +91,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_category_item" />
+            app:layout_constraintTop_toBottomOf="@id/fl_container_category" />
+
 
         <ImageButton
             android:id="@+id/ib_change_list_mode"
@@ -88,6 +108,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_catalog_title"
             app:tint="@color/md_theme_light_primary" />
+
+        <include
+            android:id="@+id/layout_state_catalog"
+            layout="@layout/layout_content_state"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_catalog_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_catalog_list"
