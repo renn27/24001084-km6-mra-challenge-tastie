@@ -175,7 +175,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_minus"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="@color/md_theme_light_primary"
+                android:contentDescription="@string/desc_iv_sub_item_count" />
 
             <TextView
                 android:id="@+id/tv_add_count_cart"
@@ -196,7 +197,8 @@
                 android:layout_weight="1"
                 android:maxWidth="240dp"
                 android:src="@drawable/ic_plus"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="@color/md_theme_light_primary"
+                android:contentDescription="@string/desc_iv_add_item_count" />
         </LinearLayout>
 
         <Button

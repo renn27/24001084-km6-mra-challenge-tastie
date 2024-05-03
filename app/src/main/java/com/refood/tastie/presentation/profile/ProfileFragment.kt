@@ -12,25 +12,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.google.firebase.auth.FirebaseAuth
 import com.refood.tastie.R
-import com.refood.tastie.data.repository.UserRepositoryImpl
-import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.refood.tastie.databinding.FragmentProfileBinding
 import com.refood.tastie.presentation.login.LoginActivity
-import com.refood.tastie.utils.GenericViewModelFactory
 import com.refood.tastie.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
-    private val viewModel: ProfileViewModel by viewModels{
-        GenericViewModelFactory.create(createViewModel())
-    }
+    private val viewModel: ProfileViewModel by viewModel()
 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -143,10 +137,18 @@ class ProfileFragment : Fragment() {
     private fun observeData() {
         viewModel.changePhotoResult.observe(viewLifecycleOwner) {
             it.proceedWhen(doOnSuccess = {
-                Toast.makeText(requireContext(), "Change Photo Profile Success !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Change Photo Profile Success !",
+                    Toast.LENGTH_SHORT
+                ).show()
                 showUserData()
             }, doOnError = {
-                Toast.makeText(requireContext(), "Change Photo Profile Failed !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Change Photo Profile Failed !",
+                    Toast.LENGTH_SHORT
+                ).show()
                 showUserData()
             })
         }
@@ -156,12 +158,20 @@ class ProfileFragment : Fragment() {
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
                     binding.btnChangeProfile.isVisible = true
-                    Toast.makeText(requireContext(), "Change Profile data Success !", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Change Profile data Success !",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 },
                 doOnError = {
                     binding.pbLoading.isVisible = false
                     binding.btnChangeProfile.isVisible = true
-                    Toast.makeText(requireContext(), "Change Profile data Failed !", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Change Profile data Failed !",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 },
                 doOnLoading = {
@@ -190,38 +200,4 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-
-    private fun createViewModel(): ProfileViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        return ProfileViewModel(repo)
-    }
-
-//    private fun observeProfileData() {
-//        viewModel.profileData.observe(viewLifecycleOwner) {
-//            binding.ivProfile.load(it.profileImg) {
-//                crossfade(true)
-//                error(R.drawable.ic_tab_profile)
-//                transformations(CircleCropTransformation())
-//            }
-//            binding.tfUsername.setText(it.username)
-//            binding.tfEmail.setText(it.email)
-//            binding.tfNotelp.setText(it.noTelp)
-//        }
-//    }
-//
-//    private fun setClickListener() {
-//        binding.btnEdit.setOnClickListener {
-//            viewModel.changeEditMode()
-//        }
-//    }
-//
-//    private fun observeEditMode() {
-//        viewModel.isEditMode.observe(viewLifecycleOwner) {
-//            binding.tfEmail.isEnabled = it
-//            binding.tfNotelp.isEnabled = it
-//            binding.tfUsername.isEnabled = it
-//        }
-//    }
 }

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.refood.tastie.data.model.Category
 import com.refood.tastie.databinding.ItemCategoryMenuBinding
-import com.refood.tastie.core.ViewHolderBinder
 
 class CategoryListAdapter(private val itemClick: (Category) -> Unit) :
     RecyclerView.Adapter<CategoryListAdapter.ItemCategoryViewHolder>() {

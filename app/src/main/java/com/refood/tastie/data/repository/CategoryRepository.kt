@@ -1,7 +1,7 @@
 package com.refood.tastie.data.repository
 
-import com.refood.tastie.data.mapper.toCategories
 import com.refood.tastie.data.datasource.category.CategoryDataSource
+import com.refood.tastie.data.mapper.toCategories
 import com.refood.tastie.data.model.Category
 import com.refood.tastie.utils.ResultWrapper
 import com.refood.tastie.utils.proceedFlow

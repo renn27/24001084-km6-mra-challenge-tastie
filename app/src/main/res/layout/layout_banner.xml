@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg_banner" />
+            android:src="@drawable/bg_banner"
+            android:contentDescription="@string/desc_bg_banneer" />
 
         <View
             android:layout_width="match_parent"
@@ -34,7 +35,8 @@
                 android:src="@drawable/img_discount"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/desc_icon_banner" />
 
             <TextView
                 android:id="@+id/tv_title_banner"

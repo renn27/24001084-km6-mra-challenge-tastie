@@ -16,7 +16,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/layout_form"
-        app:tint="@color/md_theme_light_primary" />
+        app:tint="@color/md_theme_light_primary"
+        android:contentDescription="@string/desc_iv_logo_app" />
 
     <include
         android:id="@+id/layout_form"

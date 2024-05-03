@@ -1,8 +1,8 @@
 package com.refood.tastie.data.source.network.services
 
-import com.refood.tastie.data.source.network.model.checkout.CheckoutRequestPayload
 import com.refood.tastie.BuildConfig
 import com.refood.tastie.data.source.network.model.category.CategoriesResponse
+import com.refood.tastie.data.source.network.model.checkout.CheckoutRequestPayload
 import com.refood.tastie.data.source.network.model.checkout.CheckoutResponse
 import com.refood.tastie.data.source.network.model.menus.MenuResponse
 import okhttp3.OkHttpClient

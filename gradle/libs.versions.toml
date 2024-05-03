@@ -1,13 +1,13 @@
 [versions]
-agp = "8.3.1"
+agp = "8.3.2"
 kotlin = "1.9.0"
-coreKtx = "1.12.0"
+coreKtx = "1.13.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
-activity = "1.8.0"
+activity = "1.9.0"
 constraintlayout = "2.1.4"
 coil = "2.6.0"
 lifecycle = "2.7.0"
@@ -18,13 +18,15 @@ room = "2.6.1"
 ksp = "1.9.10-1.0.13"
 coroutine = "1.7.3"
 retrofit = "2.9.0"
-okhttp = "4.11.0"
+okhttp = "4.12.0"
 annotation = "1.7.1"
 firebaseCrashlytics = "18.6.4"
-gradle = "8.1.0"
+gradle = "8.3.2"
 googleServices = "4.4.1"
 firebaseCrashlyticsGradle = "2.9.9"
 firebaseAuth = "22.3.1"
+koin = "3.5.6"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,6 +60,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 coroutine-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 
+# Koin
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+
 # retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
@@ -68,6 +73,7 @@ gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gr
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

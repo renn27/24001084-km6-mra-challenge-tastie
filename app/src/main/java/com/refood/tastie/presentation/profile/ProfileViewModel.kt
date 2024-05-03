@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.refood.tastie.data.model.Profile
 import com.refood.tastie.data.repository.UserRepository
 import com.refood.tastie.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers

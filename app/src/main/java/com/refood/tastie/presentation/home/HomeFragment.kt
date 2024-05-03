@@ -4,54 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.google.firebase.auth.FirebaseAuth
 import com.refood.tastie.R
-import com.refood.tastie.data.datasource.category.CategoryApiDataSource
-import com.refood.tastie.data.datasource.menu.MenuApiDataSource
 import com.refood.tastie.data.model.Category
 import com.refood.tastie.data.model.Menu
-import com.refood.tastie.data.repository.CategoryRepository
-import com.refood.tastie.data.repository.CategoryRepositoryImpl
-import com.refood.tastie.data.repository.MenuRepository
-import com.refood.tastie.data.repository.MenuRepositoryImpl
-import com.refood.tastie.data.repository.UserRepositoryImpl
 import com.refood.tastie.data.source.local.pref.UserPreference
 import com.refood.tastie.data.source.local.pref.UserPreferenceImpl
-import com.refood.tastie.data.source.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.refood.tastie.data.source.network.services.TastieApiService
 import com.refood.tastie.databinding.FragmentHomeBinding
 import com.refood.tastie.presentation.detailmenu.DetailMenuActivity
 import com.refood.tastie.presentation.home.adapter.CategoryListAdapter
-import com.refood.tastie.utils.GenericViewModelFactory
-import com.refood.tastie.utils.GridSpacingItemDecoration
 import com.refood.tastie.utils.proceedWhen
 import com.rendi.foodorderapp.presentation.home.adapter.MenuListAdapter
 import com.rendi.foodorderapp.presentation.home.adapter.OnItemClickedListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
+    private val viewModel: HomeViewModel by viewModel()
 
-    private val viewModel: HomeViewModel by viewModels {
-        val service = TastieApiService.invoke()
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val menuDataSource = MenuApiDataSource(service)
-        val menuRepository: MenuRepository = MenuRepositoryImpl(menuDataSource)
-        val categoryDataSource = CategoryApiDataSource(service)
-        val categoryRepository: CategoryRepository = CategoryRepositoryImpl(categoryDataSource)
-        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val userRepository = UserRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(HomeViewModel(categoryRepository, menuRepository,userRepository))
-    }
-
-    private lateinit var userPreference: UserPreference
-    private var isUsingListMode: Boolean = false
     private var currentCategory: String? = null
 
     private val categoryAdapter: CategoryListAdapter by lazy {
@@ -62,6 +37,8 @@ class HomeFragment : Fragment() {
         }
     }
     private var menuAdapter: MenuListAdapter? = null
+    private var isUsingListMode: Boolean = false
+    private lateinit var userPreference: UserPreference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -123,8 +100,25 @@ class HomeFragment : Fragment() {
     private fun getCategoryData() {
         viewModel.getCategories().observe(viewLifecycleOwner) {
             it.proceedWhen(
+                doOnLoading = {
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = true
+                    binding.layoutStateCategory.tvError.isVisible = false
+                    binding.rvCategoryItem.isVisible = false
+                },
                 doOnSuccess = {
+                    binding.layoutStateCategory.root.isVisible = false
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = false
+                    binding.rvCategoryItem.isVisible = true
                     it.payload?.let { data -> bindCategoryList(data) }
+                },
+                doOnError = {
+                    binding.layoutStateCategory.root.isVisible = true
+                    binding.layoutStateCategory.pbLoading.isVisible = false
+                    binding.layoutStateCategory.tvError.isVisible = true
+                    binding.rvCategoryItem.isVisible = false
+                    binding.layoutStateCategory.tvError.text = it.exception?.message.orEmpty()
                 }
             )
         }
@@ -133,9 +127,26 @@ class HomeFragment : Fragment() {
     private fun getMenuData(category: String? = null) {
         viewModel.getMenus(category).observe(viewLifecycleOwner) {
             it.proceedWhen(
+                doOnLoading = {
+                    binding.layoutStateCatalog.root.isVisible = true
+                    binding.layoutStateCatalog.pbLoading.isVisible = true
+                    binding.layoutStateCatalog.tvError.isVisible = false
+                    binding.rvCatalogList.isVisible = false
+                },
                 doOnSuccess = {
+                    binding.layoutStateCatalog.root.isVisible = false
+                    binding.layoutStateCatalog.pbLoading.isVisible = false
+                    binding.layoutStateCatalog.tvError.isVisible = false
+                    binding.rvCatalogList.isVisible = true
                     it.payload?.let { data -> bindMenuList(data) }
-                }
+                },
+                doOnError = {
+                    binding.layoutStateCatalog.root.isVisible = true
+                    binding.layoutStateCatalog.pbLoading.isVisible = false
+                    binding.layoutStateCatalog.tvError.isVisible = true
+                    binding.rvCatalogList.isVisible = false
+                    binding.layoutStateCategory.tvError.text = it.exception?.message.orEmpty()
+                },
             )
         }
     }

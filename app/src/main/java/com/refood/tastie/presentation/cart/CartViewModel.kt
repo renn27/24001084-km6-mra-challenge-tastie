@@ -42,5 +42,6 @@ class CartViewModel(
             }
         }
     }
+
     fun isUserLoggedIn() = userRepository.isLoggedIn()
 }
