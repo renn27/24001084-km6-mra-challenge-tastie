@@ -1,6 +1,5 @@
 package com.refood.tastie.data.source.network.model.checkout
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
@@ -11,5 +10,5 @@ data class CheckoutResponse(
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")
-    val status: Boolean?
+    val status: Boolean?,
 )

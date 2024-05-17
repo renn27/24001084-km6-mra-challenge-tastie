@@ -1,6 +1,5 @@
 package com.refood.tastie.utils
 
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -22,7 +21,6 @@ sealed class ResultWrapper<T>(
 
     class Idle<T>(data: T? = null) : ResultWrapper<T>(data)
 }
-
 
 fun <T> ResultWrapper<T>.proceedWhen(
     doOnSuccess: ((resource: ResultWrapper<T>) -> Unit)? = null,
@@ -90,7 +88,7 @@ fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
                 ResultWrapper.Empty(result)
             } else {
                 ResultWrapper.Success(result)
-            }
+            },
         )
     }.catch { e ->
         emit(ResultWrapper.Error(exception = Exception(e)))

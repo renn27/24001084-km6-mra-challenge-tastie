@@ -69,7 +69,8 @@ class DetailMenuActivity : AppCompatActivity() {
                 doOnSuccess = {
                     Toast.makeText(
                         this,
-                        getString(R.string.text_add_to_cart_success), Toast.LENGTH_SHORT
+                        getString(R.string.text_add_to_cart_success),
+                        Toast.LENGTH_SHORT,
                     ).show()
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("navigate_to_cart", true)
@@ -82,7 +83,7 @@ class DetailMenuActivity : AppCompatActivity() {
                 },
                 doOnLoading = {
                     Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show()
-                }
+                },
             )
         }
     }
@@ -111,7 +112,11 @@ class DetailMenuActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MENU = "EXTRA_MENU"
-        fun startActivity(context: Context, menu: Menu) {
+
+        fun startActivity(
+            context: Context,
+            menu: Menu,
+        ) {
             val intent = Intent(context, DetailMenuActivity::class.java)
             intent.putExtra(EXTRA_MENU, menu)
             context.startActivity(intent)

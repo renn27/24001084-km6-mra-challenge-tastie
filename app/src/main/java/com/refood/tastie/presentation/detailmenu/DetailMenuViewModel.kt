@@ -13,18 +13,19 @@ import kotlinx.coroutines.Dispatchers
 
 class DetailMenuViewModel(
     private val extras: Bundle?,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
 ) : ViewModel() {
-
     val product = extras?.getParcelable<Menu>(DetailMenuActivity.EXTRA_MENU)
 
-    val productCountLiveData = MutableLiveData(0).apply {
-        postValue(0)
-    }
+    val productCountLiveData =
+        MutableLiveData(0).apply {
+            postValue(0)
+        }
 
-    val priceLiveData = MutableLiveData<Double>().apply {
-        postValue(0.0)
-    }
+    val priceLiveData =
+        MutableLiveData<Double>().apply {
+            postValue(0.0)
+        }
 
     val urlLocation = product?.urlLocation
 

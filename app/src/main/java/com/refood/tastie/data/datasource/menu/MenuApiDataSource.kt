@@ -6,7 +6,7 @@ import com.refood.tastie.data.source.network.model.menus.MenuResponse
 import com.refood.tastie.data.source.network.services.TastieApiService
 
 class MenuApiDataSource(
-    private val service: TastieApiService
+    private val service: TastieApiService,
 ) : MenuDataSource {
     override suspend fun getMenus(category: String?): MenuResponse {
         return service.getMenus(category)

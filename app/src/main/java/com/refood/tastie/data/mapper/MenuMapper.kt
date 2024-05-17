@@ -11,9 +11,10 @@ fun MenuItemResponse?.toMenu() =
         imagePictUrl = this?.imgUrl.orEmpty(),
         description = this?.desc.orEmpty(),
         location = this?.location.orEmpty(),
-        urlLocation = "test"
+        urlLocation = "test",
     )
 
-fun Collection<MenuItemResponse>?.toMenus() = this?.map {
-    it.toMenu()
-} ?: listOf()
+fun Collection<MenuItemResponse>?.toMenus() =
+    this?.map {
+        it.toMenu()
+    } ?: listOf()
