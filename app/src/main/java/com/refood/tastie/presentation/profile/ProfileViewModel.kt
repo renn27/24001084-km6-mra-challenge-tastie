@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
-
     val isEditMode = MutableLiveData(false)
+
     fun changeEditMode() {
         val currentValue = isEditMode.value ?: false
         isEditMode.postValue(!currentValue)

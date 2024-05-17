@@ -21,7 +21,6 @@ import com.refood.tastie.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
-
     private lateinit var binding: FragmentProfileBinding
 
     private val viewModel: ProfileViewModel by viewModel()
@@ -38,15 +37,19 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupForm()
         showUserData()
@@ -85,36 +88,41 @@ class ProfileFragment : Fragment() {
 
     private fun requestChangePassword() {
         viewModel.createChangePwdRequest()
-        val dialog = AlertDialog.Builder(requireContext())
-            .setMessage("Change password request sended to your email : ${viewModel.getCurrentUser()?.email} Please check to your inbox or spam")
-            .setPositiveButton(
-                "Okay"
-            ) { dialog, id ->
-
-            }.create()
+        val dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(
+                    "Change password request sended to your email : ${viewModel.getCurrentUser()?.email} Please check to your inbox or spam",
+                )
+                .setPositiveButton(
+                    "Okay",
+                ) { dialog, id ->
+                }.create()
         dialog.show()
     }
 
     private fun doLogout() {
-        val dialog = AlertDialog.Builder(requireContext()).setMessage("Do you want to logout ?")
-            .setPositiveButton(
-                "Yes"
-            ) { dialog, id ->
-                viewModel.doLogout()
-                navigateToLogin()
-            }
-            .setNegativeButton(
-                "No"
-            ) { dialog, id ->
-                //no-op , do nothing
-            }.create()
+        val dialog =
+            AlertDialog.Builder(requireContext()).setMessage("Do you want to logout ?")
+                .setPositiveButton(
+                    "Yes",
+                ) { dialog, id ->
+                    viewModel.doLogout()
+                    navigateToLogin()
+                }
+                .setNegativeButton(
+                    "No",
+                ) { dialog, id ->
+                    // no-op , do nothing
+                }.create()
         dialog.show()
     }
 
     private fun navigateToLogin() {
-        startActivity(Intent(requireContext(), LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        })
+        startActivity(
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+        )
     }
 
     private fun changeProfileData() {
@@ -140,14 +148,14 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     "Change Photo Profile Success !",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
                 showUserData()
             }, doOnError = {
                 Toast.makeText(
                     requireContext(),
                     "Change Photo Profile Failed !",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
                 showUserData()
             })
@@ -161,7 +169,7 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         "Change Profile data Success !",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                 },
                 doOnError = {
@@ -170,14 +178,13 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         "Change Profile data Failed !",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-
                 },
                 doOnLoading = {
                     binding.pbLoading.isVisible = true
                     binding.btnChangeProfile.isVisible = false
-                }
+                },
             )
         }
     }

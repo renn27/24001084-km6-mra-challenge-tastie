@@ -12,5 +12,5 @@ data class Menu(
     val imagePictUrl: String,
     val description: String,
     val location: String,
-    val urlLocation: String
+    val urlLocation: String,
 ) : Parcelable

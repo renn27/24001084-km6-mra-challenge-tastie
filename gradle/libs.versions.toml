@@ -26,6 +26,10 @@ googleServices = "4.4.1"
 firebaseCrashlyticsGradle = "2.9.9"
 firebaseAuth = "22.3.1"
 koin = "3.5.6"
+ktlint = "12.1.0"
+mockk = "1.13.10"
+coroutine-test = "1.7.2"
+turbine = "1.0.0"
 
 
 [libraries]
@@ -63,6 +67,12 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 # Koin
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
+# Unit Testing
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+mockk-agent = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine-test" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+
 # retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
@@ -79,3 +89,4 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

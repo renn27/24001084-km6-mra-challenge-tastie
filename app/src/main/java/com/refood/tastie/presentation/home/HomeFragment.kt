@@ -41,15 +41,19 @@ class HomeFragment : Fragment() {
     private lateinit var userPreference: UserPreference
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setUserPreference()
         setupListCategory()
@@ -72,7 +76,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setUserPreference() {
         userPreference = UserPreferenceImpl(requireContext())
         isUsingListMode = userPreference.getListMode()
@@ -87,14 +90,16 @@ class HomeFragment : Fragment() {
 
     private fun setupListMenu(isUsingListMode: Boolean) {
         val listMode = if (isUsingListMode) MenuListAdapter.MODE_LIST else MenuListAdapter.MODE_GRID
-        menuAdapter = MenuListAdapter(
-            listMode = listMode,
-            listener = object : OnItemClickedListener<Menu> {
-                override fun onItemClicked(item: Menu) {
-                    navigateToDetail(item)
-                }
-            }
-        )
+        menuAdapter =
+            MenuListAdapter(
+                listMode = listMode,
+                listener =
+                    object : OnItemClickedListener<Menu> {
+                        override fun onItemClicked(item: Menu) {
+                            navigateToDetail(item)
+                        }
+                    },
+            )
     }
 
     private fun getCategoryData() {
@@ -119,7 +124,7 @@ class HomeFragment : Fragment() {
                     binding.layoutStateCategory.tvError.isVisible = true
                     binding.rvCategoryItem.isVisible = false
                     binding.layoutStateCategory.tvError.text = it.exception?.message.orEmpty()
-                }
+                },
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.refood.tastie.data.source.local.database.entity
 
-
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

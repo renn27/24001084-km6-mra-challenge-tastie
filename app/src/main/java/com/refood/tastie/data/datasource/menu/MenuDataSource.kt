@@ -6,6 +6,6 @@ import com.refood.tastie.data.source.network.model.menus.MenuResponse
 
 interface MenuDataSource {
     suspend fun getMenus(category: String? = null): MenuResponse
-    suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse
 
+    suspend fun createOrder(payload: CheckoutRequestPayload): CheckoutResponse
 }

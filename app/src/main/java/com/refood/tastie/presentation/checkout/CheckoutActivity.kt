@@ -1,6 +1,5 @@
 package com.refood.tastie.presentation.checkout
 
-
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,6 @@ import com.refood.tastie.utils.toIndonesianFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
-
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(layoutInflater)
     }
@@ -27,7 +25,6 @@ class CheckoutActivity : AppCompatActivity() {
     }
     private val priceItemAdapter: PriceListAdapter by lazy {
         PriceListAdapter {
-
         }
     }
 
@@ -75,19 +72,23 @@ class CheckoutActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         getString(R.string.error_checkout),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
-                }
+                },
             )
         }
     }
 
     private fun showSuccessDialog() {
-        val dialog = CustomDialog(this, object : CustomDialog.DialogListener {
-            override fun onBackToHomeClicked() {
-                finish()
-            }
-        })
+        val dialog =
+            CustomDialog(
+                this,
+                object : CustomDialog.DialogListener {
+                    override fun onBackToHomeClicked() {
+                        finish()
+                    }
+                },
+            )
         dialog.show()
     }
 

@@ -1,6 +1,5 @@
 package com.refood.tastie.data.source.network.model.category
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
@@ -11,5 +10,5 @@ data class CategoryItemResponse(
     @SerializedName("image_url")
     val imgUrl: String?,
     @SerializedName("nama")
-    val name: String?
+    val name: String?,
 )

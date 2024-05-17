@@ -10,5 +10,5 @@ data class CheckoutItemPayload(
     @SerializedName("catatan")
     val notes: String,
     @SerializedName("harga")
-    val price: Double
+    val price: Double,
 )

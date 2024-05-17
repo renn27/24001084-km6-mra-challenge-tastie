@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.refood.tastie.databinding.DialogCheckoutBinding
 
 class CustomDialog(context: Context, private val listener: DialogListener) : Dialog(context) {
-
     interface DialogListener {
         fun onBackToHomeClicked()
     }
